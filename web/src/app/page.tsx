@@ -1,95 +1,48 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
+import Link from 'next/link';
+import { AccountCard } from '@/components/common/AccountCard'
+import { TossBankCard } from '@/components/common/TossBankCard';
+import { Divider } from '@/components/common/Divider';
+import { Card } from '@/components/common/Card';
+import { MainContainer } from '@/components/common/MainContainer';
+
+const MoreText = styled.div`
+  color: ${props => props.theme.colors.gray};
+  font-weight: 600;
+  text-align: center;
+`
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+  return(
+    <MainContainer>
+      <Link href="/deposit">
+          <Card>
+            <TossBankCard bankName="토스뱅크" />
+          </Card>
+      </Link>
+        <Card>
+          <AccountCard 
+            bankName="토스뱅크 통장" 
+            balance="9,000,000,000원" 
+            imageUrl="/toss.png" 
+          />
+          <AccountCard 
+            bankName="농협은행 계좌" 
+            balance="0원" 
+            imageUrl="/kb.png" 
+          />
+          <AccountCard 
+            bankName="우리은행 계좌" 
+            balance="0원" 
+            imageUrl="/woori.png" 
+          />
+          <Divider></Divider>
+          <Link href="/loan">
+            <MoreText>내 계좌 ㆍ 대출 ㆍ 증권 ㆍ 포인트 보기</MoreText>
+          </Link>
+        </Card>
+    </MainContainer>
+  )
 }
