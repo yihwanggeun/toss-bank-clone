@@ -22,6 +22,23 @@ router.post('/', async (req, res) => {
   }
 });
 
+// 유저 ID별 계좌 조회
+
+// 계좌 상세 조회
+router.get('/user/:user_id', async (req, res) => {
+  try {
+    const account = await Account.findByUserId(req.params.user_id);
+    console.log(account);
+    if (account) {
+      res.json(account);
+    } else {
+      res.status(404).json({ message: 'Account not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // 계좌 상세 조회
 router.get('/:id', async (req, res) => {
   try {

@@ -11,6 +11,11 @@ class Account {
     return rows[0];
   }
 
+  static async findByUserId(user_id) {
+    const [rows] = await db.query('SELECT * FROM accounts WHERE user_id = ?', [user_id]);
+    return rows;
+  }
+
   static async create(accountData) {
     const { user_id, account_number, account_type } = accountData;
     const [result] = await db.query(
