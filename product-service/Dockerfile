@@ -10,6 +10,19 @@ RUN npm install
 
 COPY ./ ./
 
+# 빌드 인자 정의
+ARG DB_HOST
+ARG DB_USER
+ARG DB_PASSWORD
+ARG DB_NAME
+
+# 환경 변수로 설정
+ENV DB_HOST=$DB_HOST
+ENV DB_USER=$DB_USER
+ENV DB_PASSWORD=$DB_PASSWORD
+ENV DB_NAME=$DB_NAME
+
+
 EXPOSE 3004
 
 CMD ["npm","start"]
