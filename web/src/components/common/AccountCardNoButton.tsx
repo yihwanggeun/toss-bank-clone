@@ -5,7 +5,7 @@ import { RowContainer } from './RowContainer'
 
 interface AccountCardProps {
   bankName: string
-  balance: string
+  balance: number
   imageUrl: string
 }
 

@@ -1,0 +1,26 @@
+version: '3'
+services:
+  account-service:
+    image: yihwanggeun/account-service-image:latest
+    ports:
+      - "3001:3001"  # 포트는 실제 서비스 포트에 맞게 조정하세요
+
+  deposit-service:
+    image: yihwanggeun/deposit-service-image:latest
+    ports:
+      - "3002:3002"  # 포트는 실제 서비스 포트에 맞게 조정하세요
+
+  loan-service:
+    image: yihwanggeun/loan-service-image:latest
+    ports:
+      - "3003:3003"  # 포트는 실제 서비스 포트에 맞게 조정하세요
+
+  product-service:
+    image: yihwanggeun/product-service-image:latest
+    ports:
+      - "3004:3004"  # 포트는 실제 서비스 포트에 맞게 조정하세요
+
+# 백그라운드에서(-d) docker-compose 실행
+# docker-compose up -d
+# docker-compose up -d --force-recreate
+
