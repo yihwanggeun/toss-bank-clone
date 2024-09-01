@@ -4,17 +4,65 @@ import React, {useState} from 'react';
 import styled from '@emotion/styled';
 import { MainContainer } from '@/components/common/MainContainer';
 
-const ProductInfo = styled.div`
+const ProductContainer = styled.div`
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+`;
+
+const ProductTitle = styled.h1`
+  color: #343a40;
+  font-size: 24px;
   margin-bottom: 20px;
+  text-align: center;
+`;
+
+const ProductInfo = styled.div`
+  margin-bottom: 30px;
+`;
+
+const InfoItem = styled.p`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #495057;
+`;
+
+const Label = styled.span`
+  font-weight: bold;
+`;
+
+const Value = styled.span`
+  color: #007bff;
 `;
 
 const SignUpButton = styled.button`
-  background-color: blue;
+  background-color: #007bff;
   color: white;
-  padding: 10px 20px;
+  padding: 15px 30px;
   border: none;
-  border-radius: 5px;
+  border-radius: 16px;
   cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const AmountInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px;
 `;
 
 interface LoanPageProps {
@@ -28,7 +76,7 @@ const handleContract = (productId: number, userId: number, amount: number) => {
 };
 
 async function fetchFinancialProductById(productId: number): Promise<FinancialProduct> {
-  const apiUrl = 'http://localhost:3002/product/';
+  const apiUrl = 'http://localhost:3004/product/';
   const response = await fetch(apiUrl + `${productId}`, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error('Failed to fetch financial products');
@@ -70,6 +118,7 @@ async function createContract(productId: number, userId: number, amount: number)
     }
 }
 
+
 export default async function LoanPage({ params }: LoanPageProps) {
   const productId = parseInt(params.id, 10);
   const [amount, setAmount] = useState<number>(451);
@@ -78,22 +127,45 @@ export default async function LoanPage({ params }: LoanPageProps) {
 
   return (
     <MainContainer>
-      <ProductInfo>
-        <h1>대출 상품 정보</h1>
-        <p>상품 ID: {productInfo.id}</p>
-        <p>상품명: {productInfo.name}</p>
-        <p>이자율: {productInfo.interest_rate}%</p>
-        <p>유형: {productInfo.type}</p>
-        <p>설명: {productInfo.description}</p>
-        <p>기간 (개월): {productInfo.term_months}</p>
-        <p>최소 금액: {productInfo.min_amount}</p>
-        <p>최대 금액: {productInfo.max_amount}</p>
-      </ProductInfo>
-      <SignUpButton onClick={() => createContract(productInfo.id, 1, amount)}>가입하기</SignUpButton>
+      <ProductContainer>
+        <ProductTitle>대출 상품 정보</ProductTitle>
+        <ProductInfo>
+          <InfoItem>
+            <Label>상품명:</Label>
+            <Value>{productInfo.name}</Value>
+          </InfoItem>
+          <InfoItem>
+            <Label>이자율:</Label>
+            <Value>{productInfo.interest_rate}%</Value>
+          </InfoItem>
+          <InfoItem>
+            <Label>유형:</Label>
+            <Value>{productInfo.type}</Value>
+          </InfoItem>
+          <InfoItem>
+            <Label>설명:</Label>
+            <Value>{productInfo.description}</Value>
+          </InfoItem>
+          <InfoItem>
+            <Label>기간 (개월):</Label>
+            <Value>{productInfo.term_months}</Value>
+          </InfoItem>
+        </ProductInfo>
+        <AmountInput
+          type="number"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
+          placeholder="대출 금액을 입력하세요"
+          min={productInfo.min_amount}
+          max={productInfo.max_amount}
+        />
+        <SignUpButton onClick={() => createContract(productInfo.id, 1, amount)}>
+          가입하기
+        </SignUpButton>
+      </ProductContainer>
     </MainContainer>
   );
 }
-
 interface FinancialProduct {
   id: number;
   name: string;
